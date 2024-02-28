@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.example.crud.mapper.BoardMapper">
+
+	<select id="showList" resultType="Board">
+		SELECT B.*, M.nickname
+			FROM board AS B
+				INNER JOIN member AS M
+				ON B.memberId = M.id
+			WHERE B.type = #{type}
+	</select>
+	
+	<insert id="doWrite">
+		INSERT INTO board(
+			SET type = #{type}
+			, title = #{title}
+			, body = #{body}
+			, memberId = #{memberId}
+			, regDate = NOW()
+			, updateDate = NOW()
+		)
+	</insert>
+	
+	<select id="getBoardById" resultType="board">
+		SELECT B.*, M.nickname
+			FROM board AS B
+				INNER JOIN member AS M
+				ON B.memberId = M.id
+			WHERE B.id = #{id}
+	</select>
+	
+	<update id="doModify">
+		UPDATE board
+			SET type = #{type}
+			, title = #{title}
+			, body = #{body}
+			, updateDate = NOW()
+		WHERE id = #{id}
+	</update>
+
+</mapper>
+  
