@@ -10,21 +10,30 @@
 			FROM board AS B
 				INNER JOIN member AS M
 				ON B.memberId = M.id
-			WHERE B.type = #{type}
+					WHERE B.type = #{type}
+				ORDER BY B.id DESC
+					LIMIT #{currentPageNumberPosts} OFFSET #{currentPage} 
+	</select>
+	
+	<select id="cntPosts">
+		SELECT COUNT(id) FROM board
+			WHERE type = #{type}
 	</select>
 	
 	<insert id="doWrite">
-		INSERT INTO board(
+		INSERT INTO board
 			SET type = #{type}
 			, title = #{title}
 			, body = #{body}
 			, memberId = #{memberId}
 			, regDate = NOW()
 			, updateDate = NOW()
-		)
+		<selectKey keyColumn="id" resultType="int" keyProperty="id" order="AFTER">
+			select max(id) AS id from board
+		</selectKey>
 	</insert>
 	
-	<select id="getBoardById" resultType="board">
+	<select id="getBoardById" resultType="Board">
 		SELECT B.*, M.nickname
 			FROM board AS B
 				INNER JOIN member AS M
@@ -40,6 +49,10 @@
 			, updateDate = NOW()
 		WHERE id = #{id}
 	</update>
+	
+	<select id="getLastId" resultType="int">
+		SELECT MAX(id) FROM board
+	</select>
 
 </mapper>
   

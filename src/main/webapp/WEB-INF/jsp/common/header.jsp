@@ -31,8 +31,8 @@
 		<c:if test="${!empty sessionScope.member}">
 			<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/member/logout">로그아웃</a></li>
 		</c:if>
-		<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/board/list?type=1">공지사항</a></li>
-		<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/board/list?type=2">자유게시판</a></li>
+		<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/board/list?type=1&page=1">공지사항</a></li>
+		<li class="hover:underline"><a class="h-full px-3 flex items-center" href="/board/list?type=2&page=1">자유게시판</a></li>
 		</ul>
 	</div>
 	<hr>

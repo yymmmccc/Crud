@@ -23,6 +23,19 @@
 		</c:forEach>
 	</tbody>
 </table>
+
+<c:forEach begin="1" end="${totalPage }" var="page">
+	<c:choose>
+		<c:when test="${page == param.page}">
+			<a href="/board/list?page=${page }" style="color : red">${page }</a>
+		</c:when>
+		<c:otherwise>
+			<a href="/board/list?page=${page }">${page }</a>
+		</c:otherwise>
+	</c:choose>
+</c:forEach>
+
+	
 <c:if test="${!empty member }">
 	<a href="/board/write?type=${param.type }">글 작성</a>
 </c:if>

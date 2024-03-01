@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.crud.mapper.BoardMapper;
 import com.example.crud.vo.Board;
+import com.example.crud.vo.Member;
 
 @Service
 public class BoardService {
@@ -16,16 +17,19 @@ public class BoardService {
 		this.boardMapper = boardMapper;
 	}
 
-	public List<Board> showList(int type) {
+	public List<Board> showList(int type, int currentPageNumberPosts, int currentPage) {
 		
-		return boardMapper.showList(type);
+		return boardMapper.showList(type, currentPageNumberPosts, currentPage);
 		
 	}
 
-	public void doWrite(int type, String title, String body, int memberId) {
+	public int doWrite(int type, String title, String body, Member member) {
 		
-		boardMapper.doWrite(type, title, body, memberId);
+		boardMapper.doWrite(type, title, body, member.getId()); 
 		
+		int lastId = getLastId();	// 방금 insert 게시물의 기본키(id)를 가져옴 -> detail?id=내가 방금 작성한 글 보여주기 위함 
+		
+		return lastId;
 	}
 
 	public Board getBoardById(int id) {
@@ -37,6 +41,16 @@ public class BoardService {
 	public void doModify(int id, int type, String title, String body) {
 		
 		boardMapper.doModify(id, type, title, body);
+		
+	}
+	
+	private int getLastId() {
+		return boardMapper.getLastId();
+		
+	}
+
+	public int cntPosts(int type) {
+		return boardMapper.cntPosts(type);
 		
 	}
 

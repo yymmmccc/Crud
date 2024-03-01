@@ -26,11 +26,24 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/board/list")
-	public String showList(Model model, @RequestParam(defaultValue = "1") int type) {
+	public String showList(Model model, @RequestParam(defaultValue = "1") int type, 
+			@RequestParam(defaultValue = "1") int page) {
 		
-		List<Board> boards = boardService.showList(type);
+		int currentPageNumberPosts = 10; // 현재 페이지 보여줄 게시글 갯수
+		int currentPage = ((page -1) * currentPageNumberPosts); // 0부터.. 10부터.. 
+		
+		// 마지막페이지를 알아야됨 -> 게시글 총 글 갯수 알아내기 (db갔다와야함)
+		double totalPage = boardService.cntPosts(type);
+		totalPage = Math.ceil(totalPage / 10);
+		// ex. totalPage가 53이면 60으로 바꿔줘야 나머지 3개 페이지도 보여줌 ok
+		// ex, 236
+		// 페이지를 10개씩 끊어서 보여주고싶음.
+		
+		List<Board> boards = boardService.showList(type, currentPageNumberPosts, currentPage);
+		
 		
 		model.addAttribute("boards", boards);
+		model.addAttribute("totalPage", totalPage);
 		
 		return "/board/list";
 	}
@@ -47,11 +60,10 @@ public class BoardController {
 		
 		HttpSession session = request.getSession();
 		Member member = (Member)session.getAttribute("member");
-		int memberId = member.getId();
 		
-		boardService.doWrite(type, title, body, memberId);
+		int lastBoardId = boardService.doWrite(type, title, body, member);
 		
-		return Message.showAlertMovePage("게시글이 작성되었습니다.", String.format("/board/list?type=%d", type));
+		return Message.showAlertMovePage("게시글이 작성되었습니다.", String.format("/board/detail?id=%d", lastBoardId));
 	}
 	
 	@RequestMapping("/board/detail")
