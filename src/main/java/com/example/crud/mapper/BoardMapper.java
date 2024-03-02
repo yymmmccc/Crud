@@ -10,7 +10,7 @@ import com.example.crud.vo.Board;
 @Mapper
 public interface BoardMapper {
 
-	public List<Board> showList(int type, int currentPageNumberPosts, int currentPage);
+	public List<Board> showList(int type, String searchType, String searchKeyword, int currentPageNumberPosts, int currentPage);
 
 	public void doWrite(int type, String title, String body, @Param("memberId") int memberId);
 
@@ -20,6 +20,6 @@ public interface BoardMapper {
 
 	public int getLastId();
 
-	public int cntPosts(int type);
+	public int cntPosts(int type, String searchType, String searchKeyword);
 
 }

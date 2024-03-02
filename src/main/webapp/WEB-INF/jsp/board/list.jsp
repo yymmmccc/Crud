@@ -2,6 +2,15 @@
     pageEncoding="UTF-8"%>
     
 <%@ include file="../common/header.jsp" %>
+<form action="list" method="GET">
+	<select name="searchType" value="${searchType}">
+		<option value="title" ${searchType == 'title' ? 'selected' : ''}>제목</option>
+		<option value="body"  ${searchType == 'body' ? 'selected' : ''}>내용</option>
+		<option value="titleAndBody" ${searchType == 'titleAndBody' ? 'selected' : ''}>제목 + 내용</option>
+	</select>
+	<input type="text" name="searchKeyword" value="${searchKeyword }" palceholder="검색어를 입력하세요."/>
+	<button>검색</button>
+</form>
 <table class="table">
 	<thead>
 		<tr>
@@ -24,20 +33,28 @@
 	</tbody>
 </table>
 
-<c:forEach begin="1" end="${totalPage }" var="page">
+<c:if test="${paging.startPage > 1 }">
+	<a href="/board/list?type=${type }&page=${paging.startPage - 1}&searchType=${searchType}&searchKeyword=${searchKeyword}">이전</a>  <!-- 1페이지에서 다음으로가면 21페이지의 데이터보여줌 -->
+</c:if>
+
+<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="pageCnt">
 	<c:choose>
-		<c:when test="${page == param.page}">
-			<a href="/board/list?page=${page }" style="color : red">${page }</a>
+		<c:when test="${pageCnt == param.page}">
+			<a href="/board/list?type=${type }&page=${pageCnt }&searchType=${searchType}&searchKeyword=${searchKeyword}" style="color : red">${pageCnt }</a>
 		</c:when>
 		<c:otherwise>
-			<a href="/board/list?page=${page }">${page }</a>
+			<a href="/board/list?type=${type }&page=${pageCnt }&searchType=${searchType}&searchKeyword=${searchKeyword}">${pageCnt }</a>
 		</c:otherwise>
 	</c:choose>
 </c:forEach>
 
+<c:if test="${paging.totalPage != paging.endPage }">
+	<a href="/board/list?type=${type }&page=${paging.endPage + 1}&searchType=${searchType}&searchKeyword=${searchKeyword}">다음</a>  <!-- 1페이지에서 다음으로가면 21페이지의 데이터보여줌 -->
+</c:if>
+
 	
 <c:if test="${!empty member }">
-	<a href="/board/write?type=${param.type }">글 작성</a>
+	<a href="/board/write?type=${type }">글 작성</a>
 </c:if>
 
 

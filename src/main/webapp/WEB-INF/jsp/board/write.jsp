@@ -16,8 +16,8 @@
 							<th>게시판</th>
 							<td>
 								<select name="type">
-									<option value="1">공지사항</option>
-									<option value="2">자유게시판</option>
+									<option value="1" ${type == '1' ? 'selected' : ''}>공지사항</option>
+									<option value="2" ${type == '2' ? 'selected' : ''}>자유게시판</option>
 								</select>
 							</td>
 						</tr>

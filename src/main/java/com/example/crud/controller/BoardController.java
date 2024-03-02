@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.crud.dto.Paging;
 import com.example.crud.message.Message;
 import com.example.crud.service.BoardService;
 import com.example.crud.vo.Board;
@@ -27,29 +28,31 @@ public class BoardController {
 	
 	@RequestMapping("/board/list")
 	public String showList(Model model, @RequestParam(defaultValue = "1") int type, 
-			@RequestParam(defaultValue = "1") int page) {
+			@RequestParam(defaultValue = "1") int page, String searchType, 
+			@RequestParam(defaultValue="") String searchKeyword) {
+	
 		
-		int currentPageNumberPosts = 10; // 현재 페이지 보여줄 게시글 갯수
-		int currentPage = ((page -1) * currentPageNumberPosts); // 0부터.. 10부터.. 
+		int totalPage = boardService.cntPosts(type, searchType, searchKeyword);
 		
-		// 마지막페이지를 알아야됨 -> 게시글 총 글 갯수 알아내기 (db갔다와야함)
-		double totalPage = boardService.cntPosts(type);
-		totalPage = Math.ceil(totalPage / 10);
-		// ex. totalPage가 53이면 60으로 바꿔줘야 나머지 3개 페이지도 보여줌 ok
-		// ex, 236
-		// 페이지를 10개씩 끊어서 보여주고싶음.
+		Paging paging = new Paging(page, totalPage);
+		paging.calc();
 		
-		List<Board> boards = boardService.showList(type, currentPageNumberPosts, currentPage);
+		List<Board> boards = boardService.showList(type, searchType, searchKeyword, paging.getCurrentPageNumberPosts(), paging.getStartPostIndex());
 		
-		
+		model.addAttribute("type", type);
 		model.addAttribute("boards", boards);
-		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("paging", paging);
+		model.addAttribute("searchType", searchType);
+		model.addAttribute("searchKeyword", searchKeyword);
+		
 		
 		return "/board/list";
 	}
 	
 	@RequestMapping("/board/write")
-	public String write(int type) {
+	public String write(Model model, int type) {
+		
+		model.addAttribute("type", type);
 		
 		return "/board/write";
 	}

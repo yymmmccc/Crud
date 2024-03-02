@@ -17,9 +17,9 @@ public class BoardService {
 		this.boardMapper = boardMapper;
 	}
 
-	public List<Board> showList(int type, int currentPageNumberPosts, int currentPage) {
+	public List<Board> showList(int type, String searchType, String searchKeyword, int currentPageNumberPosts, int currentPage) {
 		
-		return boardMapper.showList(type, currentPageNumberPosts, currentPage);
+		return boardMapper.showList(type, searchType, searchKeyword, currentPageNumberPosts, currentPage);
 		
 	}
 
@@ -49,10 +49,9 @@ public class BoardService {
 		
 	}
 
-	public int cntPosts(int type) {
-		return boardMapper.cntPosts(type);
+	public int cntPosts(int type, String searchType, String searchKeyword) {
+		return boardMapper.cntPosts(type, searchType, searchKeyword);
 		
 	}
-
 	
 }

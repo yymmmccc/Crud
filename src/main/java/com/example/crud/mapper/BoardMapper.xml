@@ -11,13 +11,40 @@
 				INNER JOIN member AS M
 				ON B.memberId = M.id
 					WHERE B.type = #{type}
-				ORDER BY B.id DESC
-					LIMIT #{currentPageNumberPosts} OFFSET #{currentPage} 
+					<if test="searchKeyword != ''">
+						<choose>  
+							<when test="searchType == 'title'">
+								AND title like CONCAT('%', #{searchKeyword}, '%')
+							</when>
+							<when test="searchType == 'body'">
+								AND body like CONCAT('%', #{searchKeyword}, '%')
+							</when>
+							<otherwise>
+		            			AND (title LIKE CONCAT('%', #{searchKeyword}, '%') OR body LIKE CONCAT('%', #{searchKeyword}, '%'))
+							</otherwise>
+						</choose>
+					</if>
+					ORDER BY B.id DESC
+						LIMIT #{currentPageNumberPosts} OFFSET #{currentPage}
+					 
 	</select>
 	
 	<select id="cntPosts">
 		SELECT COUNT(id) FROM board
 			WHERE type = #{type}
+			<if test="searchKeyword != ''">
+				<choose>  
+					<when test="searchType == 'title'">
+						AND title like CONCAT('%', #{searchKeyword}, '%')
+					</when>
+					<when test="searchType == 'body'">
+						AND body like CONCAT('%', #{searchKeyword}, '%')
+					</when>
+					<otherwise>
+	           			AND (title LIKE CONCAT('%', #{searchKeyword}, '%') OR body LIKE CONCAT('%', #{searchKeyword}, '%'))
+					</otherwise>
+				</choose>
+			</if>
 	</select>
 	
 	<insert id="doWrite">
