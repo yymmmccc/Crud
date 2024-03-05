@@ -26,4 +26,9 @@ public class MemberService {
 		return memberMapper.getMemberByLoginId(loginId);
 		
 	}
+
+	public void doModify(int id, String nickname, String phoneNum, String email, String address) {
+		
+		memberMapper.doModify(id, nickname, phoneNum, email, address);
+	}
 }

@@ -20,6 +20,10 @@
 						<td>${board.body }</td>
 					</tr>
 					<tr>
+						<th>작성자</th>
+						<td>${board.nickname}</td>
+					</tr>
+					<tr>
 						<th>작성일</th>
 						<td>${board.updateDate }</td>
 					</tr>

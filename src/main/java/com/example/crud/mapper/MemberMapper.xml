@@ -22,4 +22,14 @@
 		SELECT * FROM member 
 			WHERE loginId = #{loginId}
 	</select>
+	
+	<update id="doModify">
+		UPDATE member
+			SET nickname = #{nickname}
+			, phoneNum = #{phoneNum}
+			, email = #{email}
+			, address = #{address}
+			, updateDate = NOW()
+		WHERE id = #{id}
+	</update>
 </mapper>

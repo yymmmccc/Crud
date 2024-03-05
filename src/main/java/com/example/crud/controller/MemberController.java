@@ -78,4 +78,19 @@ public class MemberController {
 		
 		return Message.showAlertMovePage("로그아웃 되었습니다.", "/member/login"); 
 	}
+	
+	@RequestMapping("member/myPage")
+	public String showMyPage() {
+		
+		return "/member/myPage";
+	}
+	
+	@RequestMapping("member/doModify")
+	@ResponseBody
+	public String doModify(int id, String nickname, String phoneNum, String email, String address) {
+		
+		memberService.doModify(id, nickname, phoneNum, email, address);
+		
+		return Message.showAlertMovePage("회원정보가수정되었습니다.", "myPage");
+	}
 }
