@@ -14,13 +14,15 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 <link rel="stylesheet" href="/resource/common.css"/>
 
+<link rel="icon" href="/resource/images/favicon.ico">
+
 <script src="/resource/common.js" defer='defer'></script> 
 <title>TellYa!</title>
 </head>
 <body>
 	<div class="h-20 flex container mx-auto text-4xl">
 		<a class="px-3 flex items-center" href="/">
-			<span>로고</span>
+			<span><img src="/resource/images/sansan.jpg" width="100" height="50"/></span>
 		</a>
 		<div class="flex-grow"></div>
 		<ul class="flex">

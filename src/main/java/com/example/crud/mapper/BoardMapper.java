@@ -22,4 +22,6 @@ public interface BoardMapper {
 
 	public int cntPosts(int type, String searchType, String searchKeyword);
 
+	public void incHitCnt(int id);
+
 }

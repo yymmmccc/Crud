@@ -18,7 +18,7 @@
 			<th>제목</th>
 			<th>작성자</th>
 			<th>작성일</th>
-			
+			<th>조회수</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -28,6 +28,7 @@
 			<td><a href="/board/detail?id=${board.id }">${board.title }</a></td>
 			<td>${board.nickname }</td>
 			<td>${board.regDate.substring(11, 16)}</td>
+			<td>${board.hit }</td>
 		</tr>
 		</c:forEach>
 	</tbody>

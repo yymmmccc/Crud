@@ -1,7 +1,6 @@
 package com.example.crud.message;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class Message {
 	
@@ -22,6 +21,10 @@ public class Message {
 	
 	public static String movePage(String url) {
 		return "<script>location.href='" + url + "';</script>";
+	}
+	
+	public static String jsAlertBackPage(String msg) {
+		return "/resource/common/common.js";
 	}
 	
 	

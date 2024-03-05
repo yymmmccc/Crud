@@ -1,0 +1,1 @@
+<script>alert('해당 게시물은 존재하지않습니다'); history.go(-1)</script>

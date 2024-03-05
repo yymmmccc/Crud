@@ -53,5 +53,10 @@ public class BoardService {
 		return boardMapper.cntPosts(type, searchType, searchKeyword);
 		
 	}
+
+	public void incHitCnt(int id) {
+		boardMapper.incHitCnt(id);
+		
+	}
 	
 }

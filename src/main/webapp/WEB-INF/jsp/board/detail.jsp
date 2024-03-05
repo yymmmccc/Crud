@@ -23,6 +23,10 @@
 						<th>작성일</th>
 						<td>${board.updateDate }</td>
 					</tr>
+					<tr>
+						<th>조회수</th>
+						<td>${board.hit}</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>

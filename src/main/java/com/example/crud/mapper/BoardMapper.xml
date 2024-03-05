@@ -80,6 +80,12 @@
 	<select id="getLastId" resultType="int">
 		SELECT MAX(id) FROM board
 	</select>
+	
+	<update id="incHitCnt">
+		UPDATE board 
+			SET hit = hit + 1
+			WHERE id = #{id}
+	</update>
 
 </mapper>
   
